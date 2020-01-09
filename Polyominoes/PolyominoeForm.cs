@@ -13,17 +13,25 @@ namespace Polyominoes
     public partial class PolyominoeForm : Form
     {
         Board board;
+        Engine engine;
 
         public PolyominoeForm()
         {
             InitializeComponent();
             board = new Board((int)nudSize.Value);
-            FillBoard(pnlBoard);
+            Permutations permutations = new Permutations();
+            engine = new Engine(board, permutations.yellowPerms, permutations.redPerms, permutations.bluePerms, permutations.greenPerms);
+            if (!engine.Solve())
+            {
+                status.Text = "NO SOLUTION";
+            }
+            else status.Text = "SOLUTION";
+            FillBoard(pnlBoard); //right now, this should draw the solved board immediately, with status text.
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-            label1.Text = board.Occupied[0, 0].ToString();
+            label1.Text = board.Occupied[0, 0].ToString(); //is board passed by ref or value? do we need to call engine.Board?
         }
 
         private void nudSize_ValueChanged(object sender, EventArgs e)
@@ -43,7 +51,7 @@ namespace Polyominoes
                     mini.Height = mini.Width = 50;
                     mini.Location = new Point(row * mini.Width, col * mini.Height);
                     SetSquarieColor(mini, row, col);
-                  
+
                     mini.BorderStyle = BorderStyle.Fixed3D;
                     pnl.Controls.Add(mini);
                 }
@@ -72,6 +80,11 @@ namespace Polyominoes
             {
                 mini.BackColor = Color.Beige;
             }
+        }
+
+        private void PolyominoeForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

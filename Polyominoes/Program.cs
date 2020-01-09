@@ -15,6 +15,12 @@ namespace Polyominoes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            //create permutations - pass in our 4 polyominoes
+            //create board - pass in our numRowsAndCols (4)
+            //create engine - pass in board and permutations.EachColor'sPerm
+
+            //create form - pass in our engine
             Application.Run(new PolyominoeForm());
             
 
